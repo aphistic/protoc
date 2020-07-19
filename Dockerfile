@@ -10,7 +10,8 @@ WORKDIR /src
 RUN apk add --no-cache \
     git protoc \
     go \
-    elixir
+    elixir \
+    rust cargo
 
 # Install go protobuf tools
 RUN go get github.com/gogo/protobuf/protoc-gen-gofast
@@ -18,5 +19,9 @@ RUN go get github.com/gogo/protobuf/protoc-gen-gofast
 # Install elixir protobuf tools
 RUN mix local.hex --force && \
     mix escript.install hex protobuf
+
+# Install rust protobuf tools
+RUN cargo install protobuf-codegen && \
+    cargo install grpcio-compiler
 
 ENTRYPOINT ["protoc"]
