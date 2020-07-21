@@ -8,7 +8,7 @@ LABEL org.label-schema.vcs-url="https://www.github.com/aphistic/protoc"
 WORKDIR /src
 
 RUN apk add --no-cache \
-    git protoc \
+    git protobuf-dev \
     go \
     elixir \
     rust cargo
