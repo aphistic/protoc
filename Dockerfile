@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM alpine:3.17
 
 LABEL maintainer="protoc@k.kxd.dev"
 LABEL org.label-schema.name="protoc"
@@ -21,14 +21,10 @@ RUN cargo install protobuf-codegen && \
 
 # Install go protobuf tools
 ENV GOPATH /go
-RUN go get github.com/gogo/protobuf/protoc-gen-gofast && \
-	go get github.com/gogo/protobuf/protoc-gen-gogofast && \
-    go get github.com/gogo/protobuf/protoc-gen-gogofaster && \
-    go get github.com/gogo/protobuf/protoc-gen-gogoslick && \
-    mv /go/bin/protoc-gen-gofast /usr/bin/ && \
-    mv /go/bin/protoc-gen-gogofast /usr/bin/ && \
-    mv /go/bin/protoc-gen-gogofaster /usr/bin/ && \
-    mv /go/bin/protoc-gen-gogoslick /usr/bin/
+RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@latest && \
+    go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest && \
+    mv /go/bin/protoc-gen-go /usr/bin/ && \
+    mv /go/bin/protoc-gen-go-grpc /usr/bin/
 
 # Install elixir protobuf tools
 # This env just gets rid of a warning message in the build
